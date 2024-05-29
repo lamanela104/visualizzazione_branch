@@ -1,0 +1,81 @@
+[
+  {
+    "sha": "cdb1d1795d21591659e2560e201ee4fbf1ea4aca",
+    "node_id": "C_kwDOCCum19oAKGNkYjFkMTc5NWQyMTU5MTY1OWUyNTYwZTIwMWVlNGZiZjFlYTRhY2E",
+    "commit": {
+      "author": {
+        "name": "Kevin Deng 三咲智子",
+        "email": "sxzz@sxzz.moe",
+        "date": "2024-05-29T07:03:20Z"  //uguale a committer.date
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2024-05-29T07:03:20Z"  //uguale a author.date
+      },
+      "message": "chore: disallow optional chaining (#10919)",
+      "tree": {
+        "sha": "5e7e139b30dd3947b8ba11d0c29218ceb5a9f113",
+        "url": "https://api.github.com/repos/vuejs/core/git/trees/5e7e139b30dd3947b8ba11d0c29218ceb5a9f113"
+      },
+      "url": "https://api.github.com/repos/vuejs/core/git/commits/cdb1d1795d21591659e2560e201ee4fbf1ea4aca",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJmVtM4CRC1aQ7uu5UhlAAAEJEQAJ/YFQGXwHOHUji9tobEWb74\n2PbV79+CxVIUJxXFN9475+2VW2pukfhTLX566/KTB0NPNN2E27oPkNN0XAlEWuGI\n1QUXhUon9IFmwRazDe9twuc0SeLgDIN4AMHjtEe3Lt1gvhRKY54KSWRe1aECGi0O\nGteXyRj6eVYA7cb5c/iP0YmtPfNAD0BdbhZO4auB56dXBtp12hy/CJOj0y213CJj\nOqdsUA0Yg5U6i8JEeaGOZK6kG4/1x0GcmZdaddHVL1T51FWXpsM/YvvWPUNl6T6/\n177SFcMwqec/NYwmWK7ZxDiKcKThR7NthExwUxC1r7ZXutZAyhrnepx/PDPiiFsq\nAvf84GEnu3mdNnbcPbzbbOIcTnRiTDifEwlQkjDzOvN74mYYQTTrOeOC7ptfZINi\nY7zo8c2nkn3Wvf6zNc557dWEyPhHCdWV/mLPOKCrsx0AHnIugbUnXSq5uBY0Xkb+\nf5JJEN4O6r+VIslLM8EjNyhzRUdTEEPfe7r/9GqUmvtBiIZ55rYZKs6NcN3rNgcY\nxg4a+VbuR2XQ1vDzq59u/tO9lPIWuU4EvyZ2y2sMJHXF0D0qnS9Fa+WiV+/QOhSJ\njLpQvAogpU/hngWntopUx1DuMyfot4ORGHKVrRJJfL9BAzfafDcpyWnVwyGMjFhk\nY+RJmtZqcWKrXdiFahV6\n=9Nbq\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 5e7e139b30dd3947b8ba11d0c29218ceb5a9f113\nparent 94b9b37362310c34b846a634a5365b9b2d5db937\nauthor Kevin Deng 三咲智子 \u003Csxzz@sxzz.moe\u003E 1716966200 +0800\ncommitter GitHub \u003Cnoreply@github.com\u003E 1716966200 +0800\n\nchore: disallow optional chaining (#10919)\n\n"
+      }
+    },
+    "url": "https://api.github.com/repos/vuejs/core/commits/cdb1d1795d21591659e2560e201ee4fbf1ea4aca",
+    "html_url": "https://github.com/vuejs/core/commit/cdb1d1795d21591659e2560e201ee4fbf1ea4aca",
+    "comments_url": "https://api.github.com/repos/vuejs/core/commits/cdb1d1795d21591659e2560e201ee4fbf1ea4aca/comments",
+    "author": {
+      "login": "sxzz",
+      "id": 6481596,
+      "node_id": "MDQ6VXNlcjY0ODE1OTY=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6481596?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/sxzz",
+      "html_url": "https://github.com/sxzz",
+      "followers_url": "https://api.github.com/users/sxzz/followers",
+      "following_url": "https://api.github.com/users/sxzz/following{/other_user}",
+      "gists_url": "https://api.github.com/users/sxzz/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/sxzz/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/sxzz/subscriptions",
+      "organizations_url": "https://api.github.com/users/sxzz/orgs",
+      "repos_url": "https://api.github.com/users/sxzz/repos",
+      "events_url": "https://api.github.com/users/sxzz/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/sxzz/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "94b9b37362310c34b846a634a5365b9b2d5db937",
+        "url": "https://api.github.com/repos/vuejs/core/commits/94b9b37362310c34b846a634a5365b9b2d5db937",
+        "html_url": "https://github.com/vuejs/core/commit/94b9b37362310c34b846a634a5365b9b2d5db937"
+      }
+    ]
+  }
+]

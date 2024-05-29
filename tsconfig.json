@@ -1,0 +1,36 @@
+{
+  // https://nuxt.com/docs/guide/concepts/typescript
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "moduleDetection": "auto",
+    "paths": {
+      "axios": [
+        "./node_modules/axios/index"
+      ],
+      "vue": [
+        "./node_modules/vue/index"
+      ],
+      "vue/*":[
+        "./node_modules/vue/*"
+      ],
+      "@vue/*": [
+        "./node_modules/@vue/*"
+      ],
+      "bootstrap-vue" : [
+        "./node_modules/bootstrap-vue-next/dist/src/BootstrapVue"
+      ],
+      "bootstrap-vue/typings": [
+        "./node_modules/bootstrap-vue-next/src/types/index"
+      ],
+      "typings": [
+        "./typings/index"
+      ],
+      "typings/*": [
+        "./typings/*"
+      ],
+      "components/*": [
+        "./components/*"
+      ]
+    }
+  }
+}

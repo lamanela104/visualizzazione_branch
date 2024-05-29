@@ -1,0 +1,242 @@
+[
+    {
+        "name": "3.2",
+        "commit": {
+            "sha": "49dc2dd1e4a56d0d2ad28003240c99e99ef469e4",
+            "url": "https://api.github.com/repos/vuejs/core/commits/49dc2dd1e4a56d0d2ad28003240c99e99ef469e4"
+        },
+        "protected": false
+    },
+    {
+        "name": "chore/eslint-imports",
+        "commit": {
+            "sha": "12a1763ca566962efb55ffb437a75c43acb911ec",
+            "url": "https://api.github.com/repos/vuejs/core/commits/12a1763ca566962efb55ffb437a75c43acb911ec"
+        },
+        "protected": false
+    },
+    {
+        "name": "ci/pr-number",
+        "commit": {
+            "sha": "84f22d41100987afcac7abe366f53ab8eeeb3578",
+            "url": "https://api.github.com/repos/vuejs/core/commits/84f22d41100987afcac7abe366f53ab8eeeb3578"
+        },
+        "protected": false
+    },
+    {
+        "name": "debug",
+        "commit": {
+            "sha": "0a72cbeb8274d50f60ce96f5f2efab782b1912d3",
+            "url": "https://api.github.com/repos/vuejs/core/commits/0a72cbeb8274d50f60ce96f5f2efab782b1912d3"
+        },
+        "protected": false
+    },
+    {
+        "name": "esm-node",
+        "commit": {
+            "sha": "0a10ad9dd37ea89caea853e345248212863e1d08",
+            "url": "https://api.github.com/repos/vuejs/core/commits/0a10ad9dd37ea89caea853e345248212863e1d08"
+        },
+        "protected": false
+    },
+    {
+        "name": "feat/alias-macros",
+        "commit": {
+            "sha": "a84826724f03384a1fcb7af65f1726316e237a13",
+            "url": "https://api.github.com/repos/vuejs/core/commits/a84826724f03384a1fcb7af65f1726316e237a13"
+        },
+        "protected": false
+    },
+    {
+        "name": "feat/reactiveity-transform-shorthands",
+        "commit": {
+            "sha": "d1d594aad3fdaf7c4a817a90782dafe35c7b7d64",
+            "url": "https://api.github.com/repos/vuejs/core/commits/d1d594aad3fdaf7c4a817a90782dafe35c7b7d64"
+        },
+        "protected": false
+    },
+    {
+        "name": "feat/return-setup",
+        "commit": {
+            "sha": "e4c1b2336bf5974c268b6a8bf5a0f73fed879c9a",
+            "url": "https://api.github.com/repos/vuejs/core/commits/e4c1b2336bf5974c268b6a8bf5a0f73fed879c9a"
+        },
+        "protected": false
+    },
+    {
+        "name": "feat/umd",
+        "commit": {
+            "sha": "796dfc62c45d5af771ef09d0b6e8b1542b0ffdec",
+            "url": "https://api.github.com/repos/vuejs/core/commits/796dfc62c45d5af771ef09d0b6e8b1542b0ffdec"
+        },
+        "protected": false
+    },
+    {
+        "name": "feat/v-model-details-dialog",
+        "commit": {
+            "sha": "eb5ca19fce93ce8e79f0386bbce6504105b5f2b5",
+            "url": "https://api.github.com/repos/vuejs/core/commits/eb5ca19fce93ce8e79f0386bbce6504105b5f2b5"
+        },
+        "protected": false
+    },
+    {
+        "name": "fix/default-type",
+        "commit": {
+            "sha": "d6af3254e92beae6775360a8405ba052d228af8a",
+            "url": "https://api.github.com/repos/vuejs/core/commits/d6af3254e92beae6775360a8405ba052d228af8a"
+        },
+        "protected": false
+    },
+    {
+        "name": "fix/suspense-no-fallback-timeout",
+        "commit": {
+            "sha": "1923f4a71f492d53cbf9900984f7d41771673b66",
+            "url": "https://api.github.com/repos/vuejs/core/commits/1923f4a71f492d53cbf9900984f7d41771673b66"
+        },
+        "protected": false
+    },
+    {
+        "name": "fix/4380",
+        "commit": {
+            "sha": "1b85df2350acb1269501d48947c9e2267d980284",
+            "url": "https://api.github.com/repos/vuejs/core/commits/1b85df2350acb1269501d48947c9e2267d980284"
+        },
+        "protected": false
+    },
+    {
+        "name": "fix-10017",
+        "commit": {
+            "sha": "d7ba1b7e7ebeb9202b67517a12ffad7ecd2b7883",
+            "url": "https://api.github.com/repos/vuejs/core/commits/d7ba1b7e7ebeb9202b67517a12ffad7ecd2b7883"
+        },
+        "protected": false
+    },
+    {
+        "name": "fix-jsx-dom-augmentation",
+        "commit": {
+            "sha": "08fd197d4a32750907744347d04280274ec7d975",
+            "url": "https://api.github.com/repos/vuejs/core/commits/08fd197d4a32750907744347d04280274ec7d975"
+        },
+        "protected": false
+    },
+    {
+        "name": "fix-type-call-readonly-with-ref",
+        "commit": {
+            "sha": "f3e3f1f93b79c0ed40360e4c9c9c5b9d4476e1b2",
+            "url": "https://api.github.com/repos/vuejs/core/commits/f3e3f1f93b79c0ed40360e4c9c9c5b9d4476e1b2"
+        },
+        "protected": false
+    },
+    {
+        "name": "linusborg/ce-initial-props-4716",
+        "commit": {
+            "sha": "6ce91424e57bf5ab05a294c182f2fdfe3eae56f9",
+            "url": "https://api.github.com/repos/vuejs/core/commits/6ce91424e57bf5ab05a294c182f2fdfe3eae56f9"
+        },
+        "protected": false
+    },
+    {
+        "name": "linusborg/compat-vue-extend-renderfn-7766",
+        "commit": {
+            "sha": "45a01f1efa6632d9c6ab3e7b790b64b250a5bbf8",
+            "url": "https://api.github.com/repos/vuejs/core/commits/45a01f1efa6632d9c6ab3e7b790b64b250a5bbf8"
+        },
+        "protected": false
+    },
+    {
+        "name": "linusborg/customel-props-preconnect",
+        "commit": {
+            "sha": "5d876b1b8c71f198e10b051e4289f3b90a5a7e9c",
+            "url": "https://api.github.com/repos/vuejs/core/commits/5d876b1b8c71f198e10b051e4289f3b90a5a7e9c"
+        },
+        "protected": false
+    },
+    {
+        "name": "linusborg/devtools-ssr-parentcomp",
+        "commit": {
+            "sha": "934f26f7d8af5910c87618f3ae2f2755acd71100",
+            "url": "https://api.github.com/repos/vuejs/core/commits/934f26f7d8af5910c87618f3ae2f2755acd71100"
+        },
+        "protected": false
+    },
+    {
+        "name": "linusborg/feat-set-currenInstance-for-dirs-5002",
+        "commit": {
+            "sha": "0945dbe409acf868ea428f7483dbfb0ef09c8894",
+            "url": "https://api.github.com/repos/vuejs/core/commits/0945dbe409acf868ea428f7483dbfb0ef09c8894"
+        },
+        "protected": false
+    },
+    {
+        "name": "linusborg/fix-eslint-config-node",
+        "commit": {
+            "sha": "dde5a4ede1f2d0145163d72606d75c6f6c30d234",
+            "url": "https://api.github.com/repos/vuejs/core/commits/dde5a4ede1f2d0145163d72606d75c6f6c30d234"
+        },
+        "protected": false
+    },
+    {
+        "name": "linusborg/pause-tracking-in-emit-6669",
+        "commit": {
+            "sha": "1c02e5a9c2dbabf741e7381e9ead84b97a345510",
+            "url": "https://api.github.com/repos/vuejs/core/commits/1c02e5a9c2dbabf741e7381e9ead84b97a345510"
+        },
+        "protected": false
+    },
+    {
+        "name": "linusborg/props-casing-5477",
+        "commit": {
+            "sha": "12dc598dfe4e1e171cee2214198217b57faa19f5",
+            "url": "https://api.github.com/repos/vuejs/core/commits/12dc598dfe4e1e171cee2214198217b57faa19f5"
+        },
+        "protected": false
+    },
+    {
+        "name": "linusborg/suspense-optimized-bug-7688",
+        "commit": {
+            "sha": "26e273f0542ce5b1c16e7b331cbb5588dc201060",
+            "url": "https://api.github.com/repos/vuejs/core/commits/26e273f0542ce5b1c16e7b331cbb5588dc201060"
+        },
+        "protected": false
+    },
+    {
+        "name": "linusborg/5477-hyphenate-attributes",
+        "commit": {
+            "sha": "a23438ca7bd408d1a56046a4d329f36e75d28614",
+            "url": "https://api.github.com/repos/vuejs/core/commits/a23438ca7bd408d1a56046a4d329f36e75d28614"
+        },
+        "protected": false
+    },
+    {
+        "name": "main",
+        "commit": {
+            "sha": "cdb1d1795d21591659e2560e201ee4fbf1ea4aca",
+            "url": "https://api.github.com/repos/vuejs/core/commits/cdb1d1795d21591659e2560e201ee4fbf1ea4aca"
+        },
+        "protected": false
+    },
+    {
+        "name": "minor",
+        "commit": {
+            "sha": "a501a85a7c910868e01a5c70a2abea4e9d9e87f3",
+            "url": "https://api.github.com/repos/vuejs/core/commits/a501a85a7c910868e01a5c70a2abea4e9d9e87f3"
+        },
+        "protected": false
+    },
+    {
+        "name": "perf/hoist-lazy",
+        "commit": {
+            "sha": "124e47b43bcd64feb54958bc48e595dbecc76931",
+            "url": "https://api.github.com/repos/vuejs/core/commits/124e47b43bcd64feb54958bc48e595dbecc76931"
+        },
+        "protected": false
+    },
+    {
+        "name": "pikax/capture_jsx_events",
+        "commit": {
+            "sha": "e76bcfadd80c9a64f583f326652fb0ec941ab786",
+            "url": "https://api.github.com/repos/vuejs/core/commits/e76bcfadd80c9a64f583f326652fb0ec941ab786"
+        },
+        "protected": false
+    }
+]
