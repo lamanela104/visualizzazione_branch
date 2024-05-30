@@ -3,4 +3,4 @@
 [ ] Aggiungere su Form-Input `:state="validEnvironment()" trim`
 
 [ ] Aggiungere al database campi riguardo l'ultimo commit
-[ ] 
+[ ] Fetch con API o `git branch`

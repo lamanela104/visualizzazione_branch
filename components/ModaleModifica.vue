@@ -1,9 +1,9 @@
 <template>
-	<BButton size="sm" class="mr-1" @click="apriModale()"> Modifica </BButton>
+	<BButton variant="warning" size="sm" class="mr-1" @click="apriModale()"> Modifica </BButton>
 	<BModal v-model="modaleAperto" hide-footer title="Using Component Methods">
 		<BForm @submit.prevent="modifica()" @reset="nascondiModale()">
 			<BFormGroup>
-				<BFormInput v-model="elemento.branch" placeholder="MASTER"/>
+				<BFormInput v-model="elemento.path" placeholder="./" />
 			</BFormGroup>
 			<BRow>
 				<BCol>
@@ -19,35 +19,36 @@
 
 <script setup lang="ts">
 import axios from 'axios';
-import type { TableRowT } from 'typings';
+import { defineProps } from '@vue/runtime-core/index'
+import type { EnvironmentT } from 'typings';
 type PropT = {
 	onRefresh: () => void,
-	elemento: TableRowT,
+	elemento: EnvironmentT,
 	indice: number
 }
 
 const modaleAperto = ref(false)
-const elemento = reactive<TableRowT>({ branch: "", environment: "" })
+const elemento = reactive<EnvironmentT>({ path: "", environment: "", url: "" })
 
 let props: PropT = defineProps<PropT>()
 
 onMounted(() => {
-	elemento.branch = props.elemento.branch ?? ""
+	elemento.path = props.elemento.path ?? ""
 	elemento.environment = props.elemento.environment ?? ""
+	
 })
 function apriModale() {
 	modaleAperto.value = true
 }
 function nascondiModale() {
 	modaleAperto.value = false;
-	elemento.branch = props.elemento.branch ?? ""
-	elemento.environment = props.elemento.environment ?? ""
+	elemento.path = props.elemento.path ?? ""
 }
 
 async function modifica(): Promise<void> {
-	const response = await axios.put("/api/branch", elemento);
+	const response = await axios.put("/api/environment", elemento);
 
-	if (Math.floor(response.data.status / 100) === 2) { // se status == 2XX
+	if (response.status < 300 && response.status >= 200) { // se status == 2XX
 		props.onRefresh?.apply(null, [])
 		nascondiModale()
 	} else {

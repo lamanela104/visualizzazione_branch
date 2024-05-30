@@ -30,7 +30,7 @@
     "url": "https://api.github.com/repos/vuejs/core/commits/cdb1d1795d21591659e2560e201ee4fbf1ea4aca",
     "html_url": "https://github.com/vuejs/core/commit/cdb1d1795d21591659e2560e201ee4fbf1ea4aca",
     "comments_url": "https://api.github.com/repos/vuejs/core/commits/cdb1d1795d21591659e2560e201ee4fbf1ea4aca/comments",
-    "author": {
+    "author": { // skip
       "login": "sxzz",
       "id": 6481596,
       "node_id": "MDQ6VXNlcjY0ODE1OTY=",

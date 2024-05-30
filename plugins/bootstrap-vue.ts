@@ -1,6 +1,6 @@
-import { defineNuxtPlugin } from '#app';
+import { defineNuxtPlugin } from 'nuxt/app';
 import { createBootstrap, Components } from 'bootstrap-vue-next';
-import type { Component, DefineComponent } from 'vue';
+import type { Component, DefineComponent } from '@vue/runtime-core';
 
 
 type ComponentT = Component | DefineComponent

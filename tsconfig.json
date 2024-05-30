@@ -2,7 +2,6 @@
   // https://nuxt.com/docs/guide/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "moduleDetection": "auto",
     "paths": {
       "axios": [
         "./node_modules/axios/index"
@@ -10,13 +9,13 @@
       "vue": [
         "./node_modules/vue/index"
       ],
-      "vue/*":[
+      "vue/*": [
         "./node_modules/vue/*"
       ],
       "@vue/*": [
         "./node_modules/@vue/*"
       ],
-      "bootstrap-vue" : [
+      "bootstrap-vue": [
         "./node_modules/bootstrap-vue-next/dist/src/BootstrapVue"
       ],
       "bootstrap-vue/typings": [
@@ -30,7 +29,13 @@
       ],
       "components/*": [
         "./components/*"
-      ]
-    }
-  }
+      ],
+      "@vue-rc": [
+        "./node_modules/@vue/runtime-core/dist/runtime-core"
+      ],
+    },
+  },
+  "exclude": [
+    "../debug"
+  ]
 }

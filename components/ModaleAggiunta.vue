@@ -3,10 +3,10 @@
   <BModal v-model="modaleAperto" hide-footer title="Aggiungi record">
     <BForm @submit.prevent="aggiungi()" @reset="nascondiModale()">
       <BFormGroup>
-        <BFormInput v-model="elemento.environment" :state="validEnvironment()" trim/>
+        <BFormInput v-model="elemento.environment" :state="validEnvironment()" trim />
       </BFormGroup>
       <BFormGroup>
-        <BFormInput v-model="elemento.branch" placeholder="MASTER" trim/>
+        <BFormInput v-model="elemento.branch" placeholder="./" trim />
       </BFormGroup>
       <BRow>
         <BCol>
@@ -23,8 +23,7 @@
 <script setup lang="ts">
 
 import axios from 'axios';
-import type { TableRowT } from 'typings';
-
+import type { EnvironmentT, TableRowT } from 'typings';
 
 type PropsT = {
   onRefresh: () => Promise<void>
@@ -33,8 +32,8 @@ type PropsT = {
 
 const modaleAperto = ref(false)
 const props = defineProps<PropsT>();
-const elemento = reactive<TableRowT>({
-  environment: "", branch: ""
+const elemento = reactive<EnvironmentT>({
+  environment: "", path: ""
 })
 
 function apriModale() {
@@ -43,13 +42,13 @@ function apriModale() {
 
 function nascondiModale() {
   modaleAperto.value = false;
-  elemento.branch = ""
+  elemento.path = ""
   elemento.environment = "";
 }
 
-async function aggiungi(elemento: TableRowT): Promise<void> {
-  const response = await axios.post("/api/branch", elemento);
-  if (Math.floor(response.data.status / 100) === 2) { // se status == 2XX, stato OK
+async function aggiungi(): Promise<void> {
+  const response = await axios.post("/api/environment", elemento);
+  if (response.status < 300 && response.status >= 200) { // se status == 2XX, stato OK
     props.onRefresh?.apply(null, []) // Chiama la funzione con null-safety
     nascondiModale()
   } else {
