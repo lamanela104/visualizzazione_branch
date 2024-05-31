@@ -1,68 +1,59 @@
-export type DBEnvironmentT = {
+/**
+ * DataType of `environment` table in Database
+ */
+export interface DBEnvironmentT {
+    // Planned to add primary id
     /**
-     * PRIMARY VARCHAR(200)
+     * UNIQUE VARCHAR(30)
+     * The vq
      */
-    readonly environment: string
+    environment: string
     /**
-     * VARCHAR(200)
+     * UNIQUE VARCHAR(200)
+     * The directory where the repos is contained
      */
-    path: string
+    path: string,
+    // Planned to add a recursive function for fetching `recursive: boolean`
 }
-
-export interface RawBranchT {
-    name: string;
-    target: Target; // last commit
-    links: BranchLinks; // useful links.html.href
-}
-
-export interface EnvironmentT {
-    environment: string,
-    path: string
+/**
+ * The environment value that arrives to the user
+ */
+export interface EnvironmentT extends DBEnvironmentT {
+    /**
+     * URL of the branch
+     */
     url: string
+    /**
+     * The branch currently in
+     */
+    branch: string
+    /**
+     * The last commit info. It can be null if it is a new project
+     */
     commit?: {
+        /**
+         * Commit's Hash
+         */
         hash: string;
+        /**
+         * Commit's date
+         */
         date: string;
+        /**
+         * Commit's message
+         */
         message: string;
-        refs: string;
-        body: string;
+        /**
+         * Author's displayed name of the commit
+         */
         author_name: string;
+        /**
+         * Author's email of the commit
+         */
         author_email: string;
     }
 }
-export type BranchT = {
-    name: string,
-    link: string // html
-    commit: CommitT
-}
-export type CommitT = {
-    author: string,
-    hash: string,
-    date: Date,
-    message: string
-}
-interface BranchLinks {
-    self: HRef;
-    commits: HRef;
-    html: HRef;
-}
-
-interface HRef {
-    href: string;
-}
-
-interface Target {
-    //    type: "commit";
-    hash: string;
-    date: Date;
-    author: Author;
-    message: string;
-    //  links: TargetLinks;
-    //  parents: Parent[];
-    //  repository: Repository;
-}
-
-interface Author {
-    // type: "author";
-    raw: string;
-    // user: User;
-}
+/**
+ * DataType for creating an object for the database
+ */
+export type AddEnvironmentObjectT = Omit<DBEnvironmentT, "id">

@@ -1,32 +1,32 @@
 import mysql from 'mysql2'
-import { EnvironmentT, TableRowT } from '~/typings'
+import { EnvironmentT } from '~/typings'
+import { dbQuery, isValidPath } from '~/utils/back';
 
 export default defineEventHandler(async (event) => {
-    try {
-        // connects to the database
-        const connection = mysql.createConnection(
-            useRuntimeConfig().dbconfig
-        )
 
-        // Legge il valore del body
-        const body: EnvironmentT = await readBody(event);
+    // Legge il valore del body
+    const body: EnvironmentT = await readBody(event);
 
-        if (body.environment == undefined) {
-            setResponseStatus(event, 500, 'Assicurati di fornire il campo `environment`')
-            return
-        }
-        body.path ||= "."; // se body.branch è vuoto (anche "") diventa "MASTER" 
-
-        // Inserisce il valore
-        const response = (await connection.promise()
-            .query(
-                `UPDATE environment SET path=? WHERE environment = ? `,
-                [body.path, body.environment]
-            ))[0]
-
-        setResponseStatus(event, 201, 'OK')
-    } catch (error) {
-        console.error('Errore durante la visualizzazione delle branch:', error);
-        setResponseStatus(event, 500, 'Si è verificato un errore imprevisto durante la modifica delle branch')
+    if (body.environment == undefined) {
+        setResponseStatus(event, 500, 'Assicurati di fornire il campo `environment`')
+        return
     }
+    body.path ||= "."; // se body.branch è vuoto (anche "") diventa "MASTER" 
+
+    const status = await isValidPath(body.path)
+    if(typeof status == "string"){
+        setResponseStatus(event, 500, status)
+        return
+    }
+
+    // connects to the database
+    const query = await dbQuery(
+        `UPDATE environment SET path=? WHERE environment = ? `,
+        [body.path, body.environment]
+    )
+    if(query instanceof Error){
+        setResponseStatus(event, 500, 'Si è verificato un errore imprevisto durante la modifica delle branch')
+        return;
+    }
+    setResponseStatus(event, 201, 'OK')
 })

@@ -1,31 +1,28 @@
-import mysql from 'mysql2'
-import { EnvironmentT, TableRowT } from '~/typings'
-
+import { EnvironmentT } from '~/typings'
+import { dbQuery, isValidPath } from '~/utils/back'
 export default defineEventHandler(async (event) => {
-    try {
-        // connects to the database
-        const connection = mysql.createConnection(
-            useRuntimeConfig().dbconfig
-        )
 
-        // Legge il valore del body
-        const body: EnvironmentT = await readBody(event);
-        if(body.environment == undefined){
-            setResponseStatus(event, 500, 'Assicurati di fornire il campo `environment`')
-            return
-        }
-        body.path ||= "."; // se body.branch è vuoto (anche "") diventa "MASTER" 
-        
-        // Inserisce il valore
-        const response = (await connection.promise()
-            .query(
-                `INSERT INTO environment VALUES(?, ?)`,
-                [body.environment, body.path]
-        ))[0]
-        setResponseStatus(event, 200, 'OK')
-    } catch (error) {
-        console.error("Errore durante l'aggiunta delle branch:", error);
-        setResponseStatus(event, 500, 'Si è verificato un errore imprevisto durante l\'aggiunta delle branch')
-
+    // Legge il valore del body
+    const body: EnvironmentT = await readBody(event);
+    if (!body.environment) { // '' o undefined...
+        setResponseStatus(event, 500, 'Assicurati di fornire il campo `environment`')
+        return
     }
+    body.path ||= "./"; // se body.path è vuoto (anche "") diventa "./" 
+    body.path = body.path.trim();
+
+    // se il percorso non è valido 
+    const status = await isValidPath(body.path)
+    if (typeof status == "string") {
+        setResponseStatus(event, 500, status)
+        return;
+    }
+
+    //esegue comando
+    const result = await dbQuery(`INSERT INTO environment (environment, path) VALUES (?,?)`, [body.environment, body.path])
+    if (result instanceof Error) {
+        setResponseStatus(event, 500, result.message)
+        return;
+    }
+    setResponseStatus(event, 201, "OK")
 })

@@ -1,6 +1,8 @@
-[ ] Mettere errori sui modali
+[p] Mettere errori sui modali
 [ ] Mettere condizioni per la lunghezza dei campi del DB
-[ ] Aggiungere su Form-Input `:state="validEnvironment()" trim`
+[X] Aggiungere su Form-Input `:state="validEnvironment()" trim`
 
-[ ] Aggiungere al database campi riguardo l'ultimo commit
-[ ] Fetch con API o `git branch`
+[X] Fetch con `git branch`
+[ ] Fetch con API
+
+[ ] Aggiungere ID per modifcare anche `environment`

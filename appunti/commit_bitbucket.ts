@@ -3,7 +3,7 @@ interface BitBucketCommitT {
     pagelen?: number;
     next?:    string;
 }
-export type ReturnT = {
+type ReturnT = {
     hash: string,
     author: string
     message: string
