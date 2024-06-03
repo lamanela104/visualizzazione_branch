@@ -1,7 +1,7 @@
 <template>
-  <BAlert v-model="props.erroreVisibile" variant="warning" dismissible fade>
+  <b-alert v-model="props.erroreVisibile" variant="warning" dismissible fade>
     {{ props.errore }}
-  </BAlert>
+  </b-alert>
 </template>
 
 <script setup lang="ts">

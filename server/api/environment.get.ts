@@ -1,16 +1,16 @@
 import type { DBEnvironmentT, DataT, EnvironmentT, BranchT } from '~/typings'
-import GitBranch from '../../utils/gitutils'
+import { GitBranch } from '../../utils/git'
 import { dbQuery } from '~/utils/back'
 
 export default defineEventHandler(async (event) => {
-    const query = await dbQuery<DBEnvironmentT[]>("SELECT * FROM environment");
+    const query = await dbQuery<DBEnvironmentT>("SELECT * FROM environment");
     if (query instanceof Error) {
         console.error(query.message)
         setResponseStatus(event, 500, query.message)
         return
     }
 
-    let environmentRows: DBEnvironmentT[] = query[0]
+    let environmentRows = query[0]
     let branchesOutput: Record<string, BranchT> = {}
 
     let environments: EnvironmentT[] = []
@@ -42,8 +42,8 @@ export default defineEventHandler(async (event) => {
             }
         })
         environments = await Promise.all(promiseOutput);
-        setResponseStatus(event, 200, "OK")
         console.timeEnd("git")
+        setResponseStatus(event, 200, "OK")
     } catch (error) {
         console.error('Errore durante la visualizzazione delle branch:', error);
         setResponseStatus(event, 500, 'Si è verificato un errore imprevisto di git')

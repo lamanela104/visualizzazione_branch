@@ -37,7 +37,7 @@ export function isValidEnvironment(environment?: string): string | true {
     return true
 }
 
-export async function dbQuery<T = {}>(q: string, ...params: any[]): Promise<Error | [T & QueryResult, FieldPacket[]]> {
+export async function dbQuery<T extends object>(q: string, ...params: any[]): Promise<Error | [T[], FieldPacket[]]> {
     let dbConnection;
     try {
         // connects to the database
@@ -45,11 +45,12 @@ export async function dbQuery<T = {}>(q: string, ...params: any[]): Promise<Erro
             useRuntimeConfig().dbconfig
         )
         // Inserisce il valore
-        return await dbConnection.promise()
-            .query<T & QueryResult>(
+        let [data, queryPacket] = await dbConnection.promise()
+            .query(
                 q,
                 params
-            )
+            );
+        return [data as T[], queryPacket]
     } catch (error) {
         return error as Error; //console.error("Errore durante l'aggiunta nel database:", error);
     } finally {

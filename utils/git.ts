@@ -1,6 +1,6 @@
 import simpleGit, { type BranchSummary, type SimpleGitOptions, type SimpleGit, type Response, type SimpleGitTaskCallback, type StatusResult } from "simple-git";
 
-export default class GitBranch {
+export class GitBranch {
     public git;
     private branches: BranchSummary | undefined;
     constructor(path: string, options?: Partial<SimpleGitOptions>) {

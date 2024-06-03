@@ -5,7 +5,7 @@
   <b-modal
     v-model="modaleAperto"
     hide-footer
-    title="Sicuro di voler fare il deploy?"
+    title="Sicuro di voler eseguire il deploy?"
   >
     <b-form @submit.prevent="deploy()" @reset="nascondiModale()">
       <b-row>

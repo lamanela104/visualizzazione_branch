@@ -2,10 +2,14 @@
  * DataType of `environment` table in Database
  */
 export interface DBEnvironmentT {
+    /**
+     * PRIMARY KEY INT
+     * the id of a record
+     */
     readonly ID: number
     /**
      * UNIQUE VARCHAR(30)
-     * The vq
+     * The environment that is in the link
      */
     environment: string
     /**
@@ -18,11 +22,8 @@ export interface DBEnvironmentT {
      * The path to be executed when changed branch
      */
     deploy_path: string | null
-    // Planned to add a recursive function for fetching `recursive: boolean`
-}
-export interface DataT {
-    environments: EnvironmentT[]
-    branches: BranchT[]
+    
+    // ? add a recursive function for fetching `recursive: boolean`
 }
 /**
  * The environment value that arrives to the user
@@ -36,7 +37,6 @@ export interface EnvironmentT extends DBEnvironmentT {
      * The branch currently in
      */
     branch: string,
-    
     /**
      * The last commit info. It can be null if it is a new project
      */
@@ -68,12 +68,31 @@ export interface CommitT {
     author_email: string;
 }
 /**
+ * The data of a needed branch
+ */
+export interface BranchT {
+    /**
+     * The name of the branch
+     */
+    name: string
+}
+/**
+ * All the data needed for front-end
+ */
+export interface DataT {
+    /**
+     * All the environments record processed from the database
+     */
+    environments: EnvironmentT[]
+    /**
+     * All the branches valid branches 
+     */
+    branches: BranchT[]
+}
+
+/**
  * DataType for creating an object for the database
  */
-export type AddEnvironmentObjectT = Omit<DBEnvironmentT, "id">
+export type AddEnvironmentObjectT = Omit<DBEnvironmentT, "ID">
 
-export interface BranchT {
-    name: string
-
-}
 export * from './utils'

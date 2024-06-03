@@ -33,7 +33,7 @@
 <script setup lang="ts">
 import axios from "axios";
 import { defineProps } from "@vue/runtime-core/index";
-import type { DataT, EnvironmentT } from "typings";
+import type { EnvironmentT } from "typings";
 import { validPath } from "../utils/front";
 
 type PropT = {
@@ -69,7 +69,7 @@ async function modifica(): Promise<void> {
       id: props.elemento.ID,
       environment: props.elemento.environment,
       branch: selezionato.value,
-    }); // TODO mettere il dato
+    });
 
     if (response.status < 300 && response.status >= 200) {
       // se status == 2XX
