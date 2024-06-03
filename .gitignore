@@ -26,7 +26,3 @@ logs
 
 # Debug
 debug/
-
-# Deployer
-./deploy.bat
-./deploy.sh
