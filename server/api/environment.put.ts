@@ -1,32 +1,44 @@
-import mysql from 'mysql2'
 import { EnvironmentT } from '~/typings'
 import { dbQuery, isValidPath } from '~/utils/back';
+import GitBranch from '~/utils/gitutils';
 
 export default defineEventHandler(async (event) => {
 
     // Legge il valore del body
-    const body: EnvironmentT = await readBody(event);
+    const body: {
+        id: number
+        environment: string
+        branch: string
+    } = await readBody(event);
 
-    if (body.environment == undefined) {
-        setResponseStatus(event, 500, 'Assicurati di fornire il campo `environment`')
+    console.table(body)
+    if (!body || body.id == undefined) {
+        setResponseStatus(event, 500, 'Assicurati di fornire il campo `id`')
         return
     }
-    body.path ||= "."; // se body.branch è vuoto (anche "") diventa "MASTER" 
-
-    const status = await isValidPath(body.path)
-    if(typeof status == "string"){
-        setResponseStatus(event, 500, status)
-        return
-    }
-
+    
+    body.branch ||= "master" // se body.branch è vuoto (anche "") diventa "MASTER" 
     // connects to the database
-    const query = await dbQuery(
-        `UPDATE environment SET path=? WHERE environment = ? `,
-        [body.path, body.environment]
+    let query = await dbQuery<{path: string}>(
+        `SELECT path FROM environment WHERE id=?`,
+        [body.id]
     )
-    if(query instanceof Error){
+    if (query instanceof Error) {
         setResponseStatus(event, 500, 'Si è verificato un errore imprevisto durante la modifica delle branch')
         return;
     }
+
+    let { path } = query[0];
+
+    let gb = new GitBranch(path);
+    gb.changeBranch(body.branch);
+    // query = await dbQuery(
+    //     `UPDATE environment SET path=? WHERE environment = ? `,
+    //     [body.path, body.environment]
+    // )
+    // if (query instanceof Error) {
+    //     setResponseStatus(event, 500, 'Si è verificato un errore imprevisto durante la modifica delle branch')
+    //     return;
+    // }
     setResponseStatus(event, 201, 'OK')
 })

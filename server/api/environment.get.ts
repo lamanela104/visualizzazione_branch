@@ -1,21 +1,29 @@
-import { DBEnvironmentT, EnvironmentT } from '~/typings'
-import mysql from 'mysql2'
+import type { DBEnvironmentT, DataT, EnvironmentT, BranchT } from '~/typings'
 import GitBranch from '../../utils/gitutils'
 import { dbQuery } from '~/utils/back'
+
 export default defineEventHandler(async (event) => {
-    let environmentRows: DBEnvironmentT[]
-    const query = dbQuery("SELECT * FROM environment");
-    if(query instanceof Error) {
+    const query = await dbQuery<DBEnvironmentT[]>("SELECT * FROM environment");
+    if (query instanceof Error) {
         console.error(query.message)
         setResponseStatus(event, 500, query.message)
         return
     }
+
+    let environmentRows: DBEnvironmentT[] = query[0]
+    let branchesOutput: Record<string, BranchT> = {}
+
+    let environments: EnvironmentT[] = []
     try {
         console.time("git")
         // Ottiene le branches per ogni percoso segnato sul db
         const promiseOutput: Promise<EnvironmentT>[] = environmentRows.map(async (val) => {
             let gb = new GitBranch(val.path);
-            const { current : branch } = await gb.getBranches();
+            const { branches, current: branch } = await gb.getBranches();
+            branchesOutput = {
+                ...branchesOutput,
+                ...branches
+            }
             const [url, commit] = await Promise.all([
                 gb.getBranchURL(branch),
                 gb.getLastCommitInfo(branch)
@@ -33,12 +41,16 @@ export default defineEventHandler(async (event) => {
                 branch
             }
         })
-        const output = await Promise.all(promiseOutput);
+        environments = await Promise.all(promiseOutput);
         setResponseStatus(event, 200, "OK")
         console.timeEnd("git")
-        return output
     } catch (error) {
         console.error('Errore durante la visualizzazione delle branch:', error);
         setResponseStatus(event, 500, 'Si è verificato un errore imprevisto di git')
+        return;
+    }
+    return {
+        environments,
+        branches: Object.values(branchesOutput)
     }
 })
