@@ -32,6 +32,7 @@
           <ModaleDeploy
             v-if="row.item.deploy_path"
             v-model="row.item"
+            @refresh="props.onRefresh"
           />
         </b-col>
         <!-- 

@@ -1,4 +1,4 @@
-import simpleGit, { type BranchSummary, type SimpleGitOptions, type SimpleGit, type Response, type SimpleGitTaskCallback } from "simple-git";
+import simpleGit, { type BranchSummary, type SimpleGitOptions, type SimpleGit, type Response, type SimpleGitTaskCallback, type StatusResult } from "simple-git";
 
 export default class GitBranch {
     public git;
@@ -55,7 +55,7 @@ export default class GitBranch {
             )
 
         // Get the log of the branch and extract the latest commit
-        const { latest } = await this.git.log({ n: 1 });
+        const { latest } = await this.git.log({ n:1 });
         return latest ?? undefined;
     }
 
@@ -65,5 +65,9 @@ export default class GitBranch {
 
     public async changeBranch(branch: string) {
         return await this.git.checkout(branch);
+    }
+
+    public async hasUncommittedChanges(): Promise<boolean> {
+        return (await this.git.status()).files.length !== 0
     }
 }

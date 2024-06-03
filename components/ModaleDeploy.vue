@@ -28,9 +28,15 @@
 import axios from "axios";
 import type { EnvironmentT } from "typings";
 
+interface PropT {
+  onRefresh(): void
+}
+
 const erroreVisibile = ref(false);
 const modaleAperto = ref(false);
 const errore = ref("");
+
+const props: PropT = defineProps<PropT>()
 
 const model = defineModel();
 
@@ -47,10 +53,10 @@ async function deploy() {
   try {
     const response = await axios.post("/api/deploy", {
       ID: model.value.ID,
-
     });
     if (response.status < 300 && response.status >= 200) {
       nascondiModale();
+      props.onRefresh?.apply(null);
     } else {
       mostraErrore(response.statusText);
     }

@@ -2,6 +2,9 @@ import { existsSync } from 'fs'
 import { platform } from 'process'
 import simpleGit from 'simple-git';
 import mysql, { type FieldPacket, type QueryResult } from 'mysql2'
+import { execFile, type ExecFileOptions } from 'child_process'
+import type { ObjectEncodingOptions } from 'fs'
+import type { FileExecutionT } from 'typings';
 /**
  * 
  * @param path Il percorso da controllare
@@ -53,4 +56,18 @@ export async function dbQuery<T = {}>(q: string, ...params: any[]): Promise<Erro
         //chiude la connessione
         dbConnection?.end();
     }
+}
+
+export async function executeFile(path: string, args?: string[], options?: (ObjectEncodingOptions & ExecFileOptions)): Promise<FileExecutionT> {
+    return await new Promise<FileExecutionT>((resolve, reject) => {
+        execFile(path, args, options, (error, stdout, stderr) => {
+            if (error) {
+                reject(error);
+            } else
+                resolve({
+                    stdout: stdout.toString('utf-8'),
+                    stderr: stderr.toString('utf-8'),
+                })
+        });
+    })
 }

@@ -4,7 +4,7 @@
   </b-button>
   <b-modal v-model="modaleAperto" hide-footer title="Modale dettagli">
     <!-- Dettagli sull'ultimo commit -->
-    <b-card title="Informazioni dell'ultimo commit">
+    <b-card title="Informazioni dell'ultimo commit" v-if="model.commit">
       <b-list-group>
         <b-list-group-item
           button
@@ -46,7 +46,7 @@ function nascondiModale() {
 function altreInformazioni() {
   let infos: Record<string, string> = {};
   infos["Percorso"] = model.value.path;
-  if (model.value.deploy_path) infos["Percorso di Deploy"] = model.value.path;
+  if (model.value.deploy_path) infos["Percorso di Deploy"] = model.value.deploy_path;
   return infos;
 }
 async function copia(elemento: string) {

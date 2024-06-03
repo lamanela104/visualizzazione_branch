@@ -11,15 +11,14 @@ export default defineEventHandler(async (event) => {
         branch: string
     } = await readBody(event);
 
-    console.table(body)
     if (!body || body.id == undefined) {
         setResponseStatus(event, 500, 'Assicurati di fornire il campo `id`')
         return
     }
-    
+
     body.branch ||= "master" // se body.branch è vuoto (anche "") diventa "MASTER" 
     // connects to the database
-    let query = await dbQuery<{path: string}>(
+    let query = await dbQuery<{ path: string }[]>(
         `SELECT path FROM environment WHERE id=?`,
         [body.id]
     )
@@ -27,11 +26,12 @@ export default defineEventHandler(async (event) => {
         setResponseStatus(event, 500, 'Si è verificato un errore imprevisto durante la modifica delle branch')
         return;
     }
-
-    let { path } = query[0];
-
+    let { path } = query[0][0] as { path: string };
+    console.log(path)
     let gb = new GitBranch(path);
-    gb.changeBranch(body.branch);
+    console.log(
+        await gb.changeBranch(body.branch)
+    );
     // query = await dbQuery(
     //     `UPDATE environment SET path=? WHERE environment = ? `,
     //     [body.path, body.environment]
