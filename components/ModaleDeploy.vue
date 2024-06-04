@@ -20,7 +20,30 @@
         </b-col>
       </b-row>
     </b-form>
-    <AlertErrore :errore="errore" :erroreVisibile="erroreVisibile" />
+    <b-alert v-model="erroreVisibile" variant="warning" dismissible fade>
+      <b-row>
+        <b-col class="center">{{ errore }}</b-col>
+      </b-row>
+      <b-row v-if="errore.startsWith('File senza commit trovati')">
+        <b-col>
+          <b-button variant="danger" class="center" @click="deploy(true)">
+            Rimuovi
+          </b-button>
+        </b-col>
+        <b-col>
+          <b-button
+            variant="secondary"
+            class="center"
+            @click="
+              erroreVisibile = false;
+              nascondiModale();
+            "
+          >
+            Annulla
+          </b-button>
+        </b-col>
+      </b-row>
+    </b-alert>
   </b-modal>
 </template>
 
@@ -29,14 +52,14 @@ import axios from "axios";
 import type { EnvironmentT } from "typings";
 
 interface PropT {
-  onRefresh(): void
+  onRefresh(): void;
 }
 
 const erroreVisibile = ref(false);
 const modaleAperto = ref(false);
 const errore = ref("");
 
-const props: PropT = defineProps<PropT>()
+const props: PropT = defineProps<PropT>();
 
 const model = defineModel();
 
@@ -45,14 +68,16 @@ function apriModale() {
 }
 function nascondiModale() {
   modaleAperto.value = false;
+  erroreVisibile.value = false;
 }
 
-async function deploy() {
+async function deploy(force?: boolean) {
   console.log(model.value);
-  
+
   try {
     const response = await axios.post("/api/deploy", {
       ID: model.value.ID,
+      force: force
     });
     if (response.status < 300 && response.status >= 200) {
       nascondiModale();

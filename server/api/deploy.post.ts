@@ -1,10 +1,12 @@
-import { DBEnvironmentT, EnvironmentT } from "~/typings";
+import type { DBEnvironmentT } from "~/typings";
 import { dbQuery, executeFile } from "~/utils/back";
-import { execSync } from 'child_process'
 import { GitBranch } from "~/utils/git";
 
 export default defineEventHandler(async (event) => {
-    let body: EnvironmentT = await readBody(event);
+    let body: {
+        ID: number,
+        force?: boolean
+    } = await readBody(event);
     if (!body || body.ID == undefined) {
         setResponseStatus(event, 500, "Assicurati di inserire il campo `ID`")
         return;
@@ -16,14 +18,14 @@ export default defineEventHandler(async (event) => {
         return
     }
 
-    const { deploy_path, path } = query[0][0];
+    const { deploy_path, path }: DBEnvironmentT = query[0][0];
 
     if (deploy_path == null) {
         setResponseStatus(event, 500, "Deploy Path è null");
         return
     }
 
-    if (await new GitBranch(path).hasUncommittedChanges()) {
+    if (!body.force && await new GitBranch(path).hasUncommittedChanges()) {
         setResponseStatus(event, 500, "File senza commit trovati");
         return;
     }

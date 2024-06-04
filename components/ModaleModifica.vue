@@ -2,7 +2,7 @@
   <b-button variant="warning" size="sm" class="mr-1" @click="apriModale()">
     Modifica
   </b-button>
-  <b-modal v-model="modaleAperto" hide-footer title="Using Component Methods">
+  <b-modal v-model="modaleAperto" hide-footer title="Modifica branch">
     <b-form @submit.prevent="modifica()" @reset="nascondiModale()">
       <b-form-group>
         <b-form-select v-model="selezionato">
@@ -59,6 +59,7 @@ function apriModale() {
 }
 function nascondiModale() {
   modaleAperto.value = false;
+  erroreVisibile.value = false;
 }
 
 async function modifica(): Promise<void> {
