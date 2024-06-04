@@ -1,6 +1,6 @@
 import simpleGit from "simple-git";
-import type { DBEnvironmentT, FileExecutionT } from "~/typings";
-import { dbQuery, executeFile } from "~/utils/back";
+import type { FileExecutionT } from "~/typings";
+import { readJson, executeFile } from "~/utils/back";
 import { GitBranch } from "~/utils/git";
 
 export default defineEventHandler(async (event) => {
@@ -13,18 +13,14 @@ export default defineEventHandler(async (event) => {
         return;
     }
 
-    let query = await dbQuery<DBEnvironmentT>("SELECT deploy_path, path FROM environment WHERE ID=?", body.ID);
-    if (query instanceof Error) {
-        setResponseStatus(event, 500, "Errore nella query del DB");
-        return
+    let data = readJson();
+    data = data.filter((_, index) => index == body.ID);
+    if (data.length === 0) {
+        setResponseStatus(event, 500, "Campo `ID` non valido")
+        return;
     }
+    const { deploy_path, path } = data[0];
 
-    const { deploy_path, path }: DBEnvironmentT = query[0][0];
-
-    if (deploy_path == null) {
-        setResponseStatus(event, 500, "Deploy Path è null");
-        return
-    }
     if (body.force) {
         console.log(await simpleGit(path).clean(['f'])); // git clean -f
     } else if (await new GitBranch(path).hasUncommittedChanges()) {

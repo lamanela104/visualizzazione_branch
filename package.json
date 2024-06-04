@@ -20,6 +20,10 @@
   },
   "type": "module",
   "devDependencies": {
+    "@vue/compiler-sfc": "^3.4.27",
+    "@vue/runtime-core": "^3.4.27",
+    "@vue/runtime-dom": "^3.4.27",
+    "@vue/server-renderer": "^3.4.27",
     "sass": "^1.77.3",
     "typescript": "^5.4.5"
   }

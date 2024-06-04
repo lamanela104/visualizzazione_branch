@@ -33,9 +33,9 @@
 </template>
 
 <script setup lang="ts">
-import type { EnvironmentT } from "typings";
+import type { FieldT } from "typings";
 
-const model: { value: EnvironmentT } = defineModel();
+const model: { value: FieldT } = defineModel();
 const modaleAperto = ref<boolean>(false);
 
 function apriModale() {

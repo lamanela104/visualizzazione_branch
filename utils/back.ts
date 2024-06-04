@@ -1,10 +1,11 @@
 import { existsSync } from 'fs'
 import { platform } from 'process'
 import simpleGit from 'simple-git';
-import mysql, { type FieldPacket } from 'mysql2'
 import { execFile, type ExecFileOptions } from 'child_process'
 import type { ObjectEncodingOptions } from 'fs'
-import type { FileExecutionT } from 'typings';
+import type { EnvironmentT, FileExecutionT } from '../typings';
+
+import {readFileSync} from 'fs'
 /**
  * 
  * @param path Il percorso da controllare
@@ -39,28 +40,28 @@ export function isValidEnvironment(environment?: string): string | true {
 
     return true
 }
-
-export async function dbQuery<T extends object>(q: string, ...params: any[]): Promise<Error | [T[], FieldPacket[]]> {
-    let dbConnection;
-    try {
-        // connects to the database
-        dbConnection = mysql.createConnection(
-            useRuntimeConfig().dbconfig
-        )
-        // Inserisce il valore
-        let [data, queryPacket] = await dbConnection.promise()
-            .query(
-                q,
-                params
-            );
-        return [data as T[], queryPacket]
-    } catch (error) {
-        return error as Error; //console.error("Errore durante l'aggiunta nel database:", error);
-    } finally {
-        //chiude la connessione
-        dbConnection?.end();
-    }
-}
+// // import mysql, { type FieldPacket } from 'mysql2'
+// // export async function dbQuery<T extends object>(q: string, ...params: any[]): Promise<Error | [T[], FieldPacket[]]> {
+// //     let dbConnection;
+// //     try {
+// //         // connects to the database
+// //         dbConnection = mysql.createConnection(
+// //             useRuntimeConfig().dbconfig
+// //         )
+// //         // Inserisce il valore
+// //         let [data, queryPacket] = await dbConnection.promise()
+// //             .query(
+// //                 q,
+// //                 params
+// //             );
+// //         return [data as T[], queryPacket]
+// //     } catch (error) {
+// //         return error as Error; //console.error("Errore durante l'aggiunta nel database:", error);
+// //     } finally {
+// //         //chiude la connessione
+// //         dbConnection?.end();
+// //     }
+// // }
 
 export async function executeFile(path: string, args?: string[], options?: (ObjectEncodingOptions & ExecFileOptions)): Promise<FileExecutionT> {
     return await new Promise<FileExecutionT>((resolve, reject) => {
@@ -74,4 +75,16 @@ export async function executeFile(path: string, args?: string[], options?: (Obje
                 })
         });
     })
+}
+
+export function readJson(): EnvironmentT[] {
+    try {
+        const dir = useRuntimeConfig().JSON_DIR
+        const value = readFileSync(dir, 'utf-8')
+        const data = JSON.parse(value);
+        return data
+    } catch(e) {
+        console.error("Error reading json file: ", e)
+        return []
+    }
 }

@@ -54,7 +54,7 @@
         fade
         @dismissed="nascondiModale()"
       >
-        {{ stdout }}
+        <div v-html="stdout"></div>
       </b-alert>
     </b-form>
   </b-modal>
@@ -62,7 +62,7 @@
 
 <script setup lang="ts">
 import axios from "axios";
-import type { EnvironmentT, FileExecutionT } from "typings";
+import type { FieldT } from "typings";
 
 interface PropT {
   onRefresh(): void;
@@ -78,7 +78,7 @@ const stdoutVisibile = ref(false);
 
 const props: PropT = defineProps<PropT>();
 
-const model = defineModel<EnvironmentT>();
+const model = defineModel<FieldT>();
 
 function apriModale() {
   modaleAperto.value = true;
@@ -105,7 +105,8 @@ async function deploy(force?: boolean) {
     });
     if (response.status < 300 && response.status >= 200) {
       console.log(response);
-      stdout.value = response.data; // TODO gestire problema con la risposta (data = '')
+
+      stdout.value = response.data.trim().replace(/\n/g, "<br>"); // TODO gestire problema con la risposta (data = '')
       stdoutVisibile.value = true;
       props.onRefresh?.apply(null);
     } else {

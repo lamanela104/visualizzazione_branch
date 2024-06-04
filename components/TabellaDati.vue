@@ -8,8 +8,14 @@
   >
     <!-- Scritta della branch -->
     <template #cell(branch)="row">
-      <b-link :href="`${row.item.url}`">
+      <b-link :href="`${row.item.branchURL}`">
         {{ row.item.branch }}
+      </b-link>
+    </template>
+    <!-- Scritta della branch -->
+    <template #cell(environment)="row">
+      <b-link :href="`${row.item.environmentURL}`">
+        {{ row.item.environment }}
       </b-link>
     </template>
     <!-- Bottoni che permettono l'interazione con un record -->
@@ -18,20 +24,8 @@
         <b-col class="center">
           <ModaleDettagli v-model="row.item" />
         </b-col>
-        <b-col class="center">
-          <ModaleModifica
-            :elemento="row.item"
-            :indice="row.index"
-            v-model="dati"
-            @refresh="props.onRefresh"
-          />
-        </b-col>
         <b-col>
-          <ModaleDeploy
-            v-if="row.item.deploy_path"
-            v-model="row.item"
-            @refresh="props.onRefresh"
-          />
+          <ModaleDeploy v-model="row.item" @refresh="props.onRefresh" />
         </b-col>
       </b-row>
     </template>
@@ -39,15 +33,15 @@
 </template>
 
 <script setup lang="ts">
-import type { DataT, EnvironmentT } from "typings";
+import type { FrontendDataT, FieldT } from "typings";
 import type { TableFieldRaw } from "bootstrap-vue/typings";
 
-type PropT = {
-  readonly onRefresh: () => Promise<DataT>;
-};
-const dati = defineModel<DataT>();
+interface PropT {
+  onRefresh(): Promise<FrontendDataT>;
+}
+const dati = defineModel<FrontendDataT>();
 const props: PropT = defineProps<PropT>();
-const campiTabella: TableFieldRaw<EnvironmentT>[] = [
+const campiTabella: TableFieldRaw<FieldT>[] = [
   {
     key: "environment",
     label: "Environment",

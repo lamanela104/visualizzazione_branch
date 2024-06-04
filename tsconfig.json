@@ -33,6 +33,9 @@
       "@vue-rc": [
         "./node_modules/@vue/runtime-core/dist/runtime-core"
       ],
+      "@vue-rd": [
+        "./node_modules/@vue/runtime-dom/dist/runtime-dom"
+      ]
     },
   },
   "exclude": [

@@ -17,18 +17,18 @@
 <script setup lang="ts">
 import axios from "axios";
 import type { TableFieldRaw } from "bootstrap-vue/typings";
-import type { DataT } from "typings";
+import type { FrontendDataT } from "typings";
 
 
-const dati = ref<DataT>({environment: [], branches: []});
+const dati = ref<FrontendDataT>({environment: [], branches: []});
 /**
  * Chiama "GET /api/environment", per ottenere i dati
  * @returns i dati ottenuti dalla richiesta, `dati` è automaticamente aggiornato. Ritorna `undefined` se la richiesta da un qualsiasi errore.
  */
-async function ottieniDati(): Promise<DataT | undefined> {
+async function ottieniDati(): Promise<FrontendDataT | undefined> {
   let response;
   try {
-    response = await axios.get<DataT>("/api/environment");
+    response = await axios.get<FrontendDataT>("/api/environment");
     if (response.status === 200) {
       dati.value = response.data;
       console.log(response.data);

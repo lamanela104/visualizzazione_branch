@@ -1,38 +1,36 @@
 /**
  * DataType of `environment` table in Database
  */
-export interface DBEnvironmentT {
+export interface EnvironmentT {
     /**
-     * PRIMARY KEY INT
-     * the id of a record
-     */
-    readonly ID: number
-    /**
-     * UNIQUE VARCHAR(30)
      * The environment that is in the link
      */
     environment: string
     /**
-     * UNIQUE VARCHAR(200)
      * The directory where the repos is contained
      */
     path: string,
     /**
-     * VARCHAR(200)
      * The path to be executed when changed branch
      */
-    deploy_path: string | null
-    
-    // ? add a recursive function for fetching `recursive: boolean`
+    deploy_path: string,
+    /**
+     * URL of the environment
+     */
+    environmentURL: string
 }
 /**
  * The environment value that arrives to the user
  */
-export interface EnvironmentT extends DBEnvironmentT {
+export interface FieldT extends EnvironmentT {
+    /**
+     * the id of a record
+     */
+    readonly ID: number
     /**
      * URL of the branch
      */
-    url: string
+    branchURL: string
     /**
      * The branch currently in
      */
@@ -79,11 +77,11 @@ export interface BranchT {
 /**
  * All the data needed for front-end
  */
-export interface DataT {
+export interface FrontendDataT {
     /**
      * All the environments record processed from the database
      */
-    environments: EnvironmentT[]
+    environments: FieldT[]
     /**
      * All the branches valid branches 
      */
@@ -93,6 +91,11 @@ export interface DataT {
 /**
  * DataType for creating an object for the database
  */
-export type AddEnvironmentObjectT = Omit<DBEnvironmentT, "ID">
-
-export * from './utils'
+export type AddEnvironmentObjectT = Omit<EnvironmentT, "ID">
+/**
+ * The execution of the file output
+ */
+export interface FileExecutionT {
+    stdout: string,
+    stderr: string
+}

@@ -1,0 +1,20 @@
+[
+	{
+		"environment": "DEV",
+		"path": "C:\\Users\\user\\Desktop\\src\\visualizzazione_branch_3",
+		"deploy_path": "C:\\Users\\user\\Desktop\\src\\visualizzazione_branch_3\\deploy.bat",
+		"environmentURL": "https://galileodev.cepu.it/auth/login"
+	},
+	{
+		"environment": "PROD",
+		"path": "C:\\Users\\user\\Desktop\\src\\visualizzazione_branch_2",
+		"deploy_path": "C:\\Users\\user\\Desktop\\src\\visualizzazione_branch_2\\deploy.bat",
+		"environmentURL": "https://qph.cf2.quoracdn.net/main-qimg-e7ee984f100bdae90f87497a7c872e28-lq"
+	},
+	{
+		"environment": "TEST",
+		"path": "C:\\Users\\user\\Desktop\\src\\visualizzazione_branch_4",
+		"deploy_path": "C:\\Users\\user\\Desktop\\src\\visualizzazione_branch_4\\deploy.bat",
+		"environmentURL": "https://galileotest.cepu.it/auth/login"
+	}
+]

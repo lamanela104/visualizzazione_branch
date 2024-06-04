@@ -28,13 +28,13 @@ CREATE TABLE IF NOT EXISTS `environment` (
   PRIMARY KEY (`ID`),
   UNIQUE KEY `environment` (`environment`),
   UNIQUE KEY `path` (`path`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dump dei dati della tabella branch.environment: ~4 rows (circa)
+-- Dump dei dati della tabella branch.environment: ~3 rows (circa)
 INSERT INTO `environment` (`ID`, `environment`, `path`, `deploy_path`) VALUES
 	(1, 'DEV', 'C:\\Users\\user\\Desktop\\src\\visualizzazione_branch_3', 'C:\\Users\\user\\Desktop\\src\\visualizzazione_branch_3\\deploy.bat'),
-	(2, 'PROD', 'C:\\Users\\user\\Desktop\\src\\visualizzazione_branch_2', NULL),
-	(3, 'TEST', 'C:\\Users\\user\\Desktop\\src\\visualizzazione_branch_4', NULL);
+	(2, 'PROD', 'C:\\Users\\user\\Desktop\\src\\visualizzazione_branch_2', 'C:\\Users\\user\\Desktop\\src\\visualizzazione_branch_2\\deploy.bat'),
+	(3, 'TEST', 'C:\\Users\\user\\Desktop\\src\\visualizzazione_branch_4', 'C:\\Users\\user\\Desktop\\src\\visualizzazione_branch_4\\deploy.bat');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

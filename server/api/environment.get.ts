@@ -1,44 +1,39 @@
-import type { DBEnvironmentT, DataT, EnvironmentT, BranchT } from '~/typings'
+import type { EnvironmentT, FieldT, BranchT } from '~/typings'
 import { GitBranch } from '../../utils/git'
-import { dbQuery } from '~/utils/back'
+import { readJson } from '~/utils/back'
 
 export default defineEventHandler(async (event) => {
-    const query = await dbQuery<DBEnvironmentT>("SELECT * FROM environment");
-    if (query instanceof Error) {
-        console.error(query.message)
-        setResponseStatus(event, 500, query.message)
-        return
-    }
+    const data: EnvironmentT[] = readJson();
 
-    let environmentRows = query[0]
     let branchesOutput: Record<string, BranchT> = {}
 
-    let environments: EnvironmentT[] = []
+    let environments: FieldT[] = []
     try {
         console.time("git")
         // Ottiene le branches per ogni percoso segnato sul db
-        const promiseOutput: Promise<EnvironmentT>[] = environmentRows.map(async (val) => {
+        const promiseOutput: Promise<FieldT>[] = data.map(async (val, index) => {
             let gb = new GitBranch(val.path);
             const { branches, current: branch } = await gb.getBranches();
             branchesOutput = {
                 ...branchesOutput,
                 ...branches
             }
-            const [url, commit] = await Promise.all([
+            const [branchURL, commit] = await Promise.all([
                 gb.getBranchURL(branch),
                 gb.getLastCommitInfo(branch)
             ])
             return {
                 ...val,
-                url,
+                ID: index,
+                branch,
+                branchURL,
                 commit: !commit ? undefined : {
                     author_email: commit.author_email,
                     author_name: commit.author_name,
                     date: commit.date,
                     hash: commit.hash,
                     message: commit.message
-                },
-                branch
+                }
             }
         })
         environments = await Promise.all(promiseOutput);

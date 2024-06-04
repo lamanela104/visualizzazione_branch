@@ -1,8 +1,8 @@
-import type { EnvironmentT } from "typings";
+import type { FieldT } from "../typings";
 import { platform } from 'process'
 
 
-export function validPath(elemento: EnvironmentT, dati?: EnvironmentT[]): boolean {
+export function validPath(elemento: FieldT, dati?: FieldT[]): boolean {
     if (elemento.path.length == 0) return false;
     if (elemento.path.length > 200) return false;
     if (platform === "win32") {
@@ -16,7 +16,7 @@ export function validPath(elemento: EnvironmentT, dati?: EnvironmentT[]): boolea
         }
     return true;
 }
-export function validEnvironment(environment: string, dati?: EnvironmentT[]) {
+export function validEnvironment(environment: string, dati?: FieldT[]) {
     if (environment.length == 0) return false;
     if (environment.length > 30) return false;
     if (dati)
