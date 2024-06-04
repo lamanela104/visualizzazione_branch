@@ -9,7 +9,6 @@ export default defineEventHandler(async (event) => {
 
     let environments: FieldT[] = []
     try {
-        console.time("git")
         // Ottiene le branches per ogni percoso segnato sul db
         const promiseOutput: Promise<FieldT>[] = data.map(async (val, index) => {
             let gb = new GitBranch(val.path);
@@ -37,7 +36,6 @@ export default defineEventHandler(async (event) => {
             }
         })
         environments = await Promise.all(promiseOutput);
-        console.timeEnd("git")
         setResponseStatus(event, 200, "OK")
     } catch (error) {
         console.error('Errore durante la visualizzazione delle branch:', error);
