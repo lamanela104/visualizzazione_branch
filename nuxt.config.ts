@@ -16,10 +16,6 @@ export default defineNuxtConfig({
       host: process.env.dbhost,
       user: process.env.dbuser,
       password: process.env.dbpassword
-    } as ConnectionOptions,
-    bitbucket: {
-      user: process.env.bitbucket_user,
-      repo: process.env.bitbucket_repo
-    }
+    } as ConnectionOptions
   }
 })

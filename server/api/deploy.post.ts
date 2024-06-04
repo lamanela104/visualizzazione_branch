@@ -1,3 +1,4 @@
+import simpleGit from "simple-git";
 import type { DBEnvironmentT } from "~/typings";
 import { dbQuery, executeFile } from "~/utils/back";
 import { GitBranch } from "~/utils/git";
@@ -24,11 +25,14 @@ export default defineEventHandler(async (event) => {
         setResponseStatus(event, 500, "Deploy Path è null");
         return
     }
-
-    if (!body.force && await new GitBranch(path).hasUncommittedChanges()) {
+    if (body.force) {
+        console.log(await simpleGit(path).clean(['f'])); // git clean -f
+    } else if (await new GitBranch(path).hasUncommittedChanges()) {
         setResponseStatus(event, 500, "File senza commit trovati");
         return;
     }
+
+
     let execValue;
     try {
         execValue = await executeFile(deploy_path, [], { shell: true, cwd: path })

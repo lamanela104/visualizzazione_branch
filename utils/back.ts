@@ -1,7 +1,7 @@
 import { existsSync } from 'fs'
 import { platform } from 'process'
 import simpleGit from 'simple-git';
-import mysql, { type FieldPacket, type QueryResult } from 'mysql2'
+import mysql, { type FieldPacket } from 'mysql2'
 import { execFile, type ExecFileOptions } from 'child_process'
 import type { ObjectEncodingOptions } from 'fs'
 import type { FileExecutionT } from 'typings';
@@ -12,6 +12,8 @@ import type { FileExecutionT } from 'typings';
  */
 export async function isValidPath(path: string): Promise<string | true> {
     if (path.length > 200) return 'Lunghezza del percorso troppo alta'
+
+    // Regex per un percorso
     if (platform === "win32") {
         if (!/^([a-zA-Z]:\\|(\.\.?\\)?)([^\\\/:*?"<>|]+\\)*[^\\\/:*?"<>|]*$/.test(path)) return 'Non un percorso valido';
     } else {
@@ -30,6 +32,7 @@ export async function isValidPath(path: string): Promise<string | true> {
 
     return true;
 }
+
 export function isValidEnvironment(environment?: string): string | true {
     if (!environment || typeof environment !== "string" || !environment.length) return 'Assicurati di fornire il campo `enviroment'
     if (environment.length > 30) return 'Lungezza dell\'ambiente troppo larga';

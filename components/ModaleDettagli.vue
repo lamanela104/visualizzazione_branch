@@ -16,6 +16,7 @@
         </b-list-group-item>
       </b-list-group>
     </b-card>
+    <!-- Altri dettagli specificati dalla funzione altreInformazioni() -->
     <b-card title="Altre informazioni">
       <b-list-group>
         <b-list-group-item
@@ -49,9 +50,13 @@ function altreInformazioni() {
   if (model.value.deploy_path) infos["Percorso di Deploy"] = model.value.deploy_path;
   return infos;
 }
-async function copia(elemento: string) {
+/**
+ * Permette all'utente di copiare il testo
+ * @param testo il testo  da copiare
+ */
+async function copia(testo: string) {
   try {
-    await navigator.clipboard.writeText(elemento);
+    await navigator.clipboard.writeText(testo);
   } catch (e) {
     console.error(e);
   }

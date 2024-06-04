@@ -6,9 +6,7 @@
     :items="dati.environments"
     responsive
   >
-    <template #cell(environment)="row">
-      {{ row.item.environment }}
-    </template>
+    <!-- Scritta della branch -->
     <template #cell(branch)="row">
       <b-link :href="`${row.item.url}`">
         {{ row.item.branch }}
@@ -35,16 +33,6 @@
             @refresh="props.onRefresh"
           />
         </b-col>
-        <!-- 
-
-        <b-col class="center">
-          <ModaleElimina
-            :elemento="row.item"
-            :indice="row.index"
-            @refresh="props.onRefresh"
-          />
-        </b-col>
-         -->
       </b-row>
     </template>
   </b-table>

@@ -22,6 +22,7 @@ export default defineEventHandler(async (event) => {
         [body.id]
     )
     if (query instanceof Error) {
+        console.error(query)
         setResponseStatus(event, 500, 'Si è verificato un errore imprevisto durante la modifica delle branch')
         return;
     }

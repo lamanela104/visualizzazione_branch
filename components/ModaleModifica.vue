@@ -15,13 +15,15 @@
           </b-form-select-option>
         </b-form-select>
       </b-form-group>
-      <AlertErrore :errore="errore" :erroreVisibile="erroreVisibile" />
+      <b-alert v-model="erroreVisibile" variant="warning" dismissible fade>
+        {{ errore }}
+      </b-alert>
       <b-form-group>
         <b-row>
-          <b-col>
+          <b-col class="center">
             <b-button type="submit" variant="primary">Modifica</b-button>
           </b-col>
-          <b-col>
+          <b-col class="center">
             <b-button type="reset" variant="danger">Chiudi</b-button>
           </b-col>
         </b-row>
@@ -48,7 +50,7 @@ const erroreVisibile = ref<boolean>(false);
 
 const modaleAperto = ref(false);
 
-const model = defineModel()
+const model = defineModel();
 let props: PropT = defineProps<PropT>();
 
 onMounted(() => {
@@ -64,7 +66,6 @@ function nascondiModale() {
 
 async function modifica(): Promise<void> {
   console.log(props.elemento);
-  
   try {
     const response = await axios.put("/api/environment", {
       id: props.elemento.ID,
