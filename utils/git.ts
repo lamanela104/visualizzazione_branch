@@ -1,4 +1,4 @@
-import simpleGit, { type BranchSummary, type SimpleGitOptions, type SimpleGit, type Response, type SimpleGitTaskCallback, type StatusResult, type DefaultLogFields } from "simple-git";
+import simpleGit, { type BranchSummary, type SimpleGitOptions, type SimpleGit, type Response, type SimpleGitTaskCallback, type StatusResult } from "simple-git";
 
 export class GitBranch {
     public git;
@@ -6,54 +6,56 @@ export class GitBranch {
     constructor(path: string, options?: Partial<SimpleGitOptions>) {
         this.git = simpleGit(path, options)
         this.branches = undefined;
+
     }
     /**
      * @returns Un oggetto contenente tutte le branch disponibili, informazioni e quella attualmente selezionata
      */
-    public async getBranches(): Promise<BranchSummary> {
+    public async getBranches() {
         return this.branches = await this.git.branch()
     }
     /**
      * 
-     * @param branch La branch dalla quale si vuole ricavare l'url
-     * @param baseUrl L'url base, se già ricavato evita di fare calcoli ulterioir
+     * @param branch 
+     * @param baseUrl
      * @returns 
      */
-    public async getBranchURL(branch?: string, baseUrl?: string): Promise<string> {
+    public async getBranchURL(branch?: string, baseUrl?: string) {
         branch = await this.getCurrentBranch(branch);
         if (!baseUrl) {
-            baseUrl = await this.getBaseURL();
+            const remotes = await this.git.getRemotes(true);
+            const originRemote = remotes.find(remote => remote.name === 'origin');
+
+            if (!originRemote) {
+                return ""
+            }
+            baseUrl = originRemote.refs.fetch.replace(/\.git$/, '');
+            return `${baseUrl}/tree/${branch}`;
         }
         let url = new URL(baseUrl)
         return `${url.origin}/${url.origin.endsWith('github.com') ? 'tree' : 'branches'}/${branch}`
     }
-    /**
-     * 
-     * @returns the URL to get into the repository
-     */
-    public async getBaseURL(): Promise<string> {
-        const remotes = await this.git.getRemotes(true);
-        const originRemote = remotes.find(remote => remote.name === 'origin');
 
-        if (!originRemote) {
-            return ""
-        }
-        return originRemote.refs.fetch.replace(/\.git$/, '');
-    }
 
     /**
      * @param branch La branch con cui fare `git checkout {branch}`, se omessa proverà a prendere l'ultima inserita, o se non è mai state presa farà `git branch`
      * @returns L'ultimo commit acquisito.
      */
-    public async getLastCommitInfo(branch?: string): Promise<DefaultLogFields | undefined> {
+    public async getLastCommitInfo(branch?: string, origin?: string) {
         branch = await this.getCurrentBranch(branch);
         // Checkout to the specified branch
-        await this.git.checkout(
-            branch
-        );
+        if (origin)
+            await this.git.checkoutBranch(
+                branch,
+                origin
+            );
+        else
+            await this.git.checkout(
+                branch
+            )
 
         // Get the log of the branch and extract the latest commit
-        const { latest } = await this.git.log({ n: 1 });
+        const { latest } = await this.git.log({ n:1 });
         return latest ?? undefined;
     }
 
@@ -67,14 +69,5 @@ export class GitBranch {
 
     public async hasUncommittedChanges(): Promise<boolean> {
         return (await this.git.status()).files.length !== 0
-    }
-    /**
-     * Emulates `git rev-parse
-     * @returns 
-     */
-    public async getLastCommitID(): Promise<string> {
-        const tmp = await this.git.revparse();
-
-        return tmp
     }
 }

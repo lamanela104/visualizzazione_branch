@@ -64,10 +64,6 @@ export interface CommitT {
      * Author's email of the commit
      */
     author_email: string;
-    /**
-     * Commits ID
-     */
-    id: string
 }
 /**
  * The data of a needed branch
