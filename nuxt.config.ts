@@ -17,6 +17,6 @@ export default defineNuxtConfig({
     // //  user: process.env.dbuser,
     // //  password: process.env.dbpassword
     // //} as ConnectionOptions
-    JSON_DIR: process.env.JSON_DIR
+    JSON_DIR: "C:\\Users\\user\\Desktop\\src\\visualizzazione_branch\\environment.json"
   }
 })
