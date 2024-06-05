@@ -4,10 +4,9 @@ import { readJson, executeFile } from "~/utils/back";
 import { GitBranch } from "~/utils/git";
 
 export default defineEventHandler(async (event) => {
-    let body: {
-        ID: number,
-        force?: boolean
-    } = await readBody(event);
+
+    let body = await readBody<{ ID: number, force?: boolean }>(event);
+
     if (!body || body.ID == undefined) {
         setResponseStatus(event, 500, "Assicurati di inserire il campo `ID`")
         return;
