@@ -1,5 +1,5 @@
 import simpleGit, { type BranchSummary, type SimpleGitOptions, type SimpleGit, type Response, type SimpleGitTaskCallback, type StatusResult } from "simple-git";
-
+import { join as joinPath } from 'path'
 export class GitBranch {
     public git;
     private branches: BranchSummary | undefined;
@@ -30,12 +30,25 @@ export class GitBranch {
                 return ""
             }
             baseUrl = originRemote.refs.fetch.replace(/\.git$/, '');
-            return `${baseUrl}/tree/${branch}`;
         }
         let url = new URL(baseUrl)
-        return `${url.origin}/${url.origin.endsWith('github.com') ? 'tree' : 'branches'}/${branch}`
+        return this.getBranchBaseURL(url, branch);
     }
 
+    private getBranchBaseURL(url: URL, branch: string) {
+        let tmp = "";
+        switch (url.host) {
+            case "github.com":
+                tmp = 'tree'; break;
+            case "bitbucket.org":
+                tmp = 'src'; break;
+            // ? add more cases
+            default:
+                return undefined;
+        }
+
+        return joinPath(url.origin, url.pathname, tmp, branch);
+    }
 
     /**
      * @param branch La branch con cui fare `git checkout {branch}`, se omessa proverà a prendere l'ultima inserita, o se non è mai state presa farà `git branch`
@@ -55,7 +68,7 @@ export class GitBranch {
             )
 
         // Get the log of the branch and extract the latest commit
-        const { latest } = await this.git.log({ n:1 });
+        const { latest } = await this.git.log({ n: 1 });
         return latest ?? undefined;
     }
 
