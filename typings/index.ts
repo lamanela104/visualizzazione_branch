@@ -24,7 +24,7 @@ export interface EnvironmentT {
  */
 export interface FieldT extends EnvironmentT {
     /**
-     * the id of a record
+     * The id of a record, it is defined as the index on the json file
      */
     readonly ID: number
     /**

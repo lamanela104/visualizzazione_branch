@@ -62,7 +62,7 @@
 
 <script setup lang="ts">
 import axios from "axios";
-import type { FieldT } from "typings";
+import type { FieldT, FileExecutionT } from "typings";
 
 interface PropT {
   onRefresh(): void;
@@ -99,14 +99,14 @@ async function deploy(force?: boolean) {
   if (sentDeploy) return;
   sentDeploy = true;
   try {
-    const response = await axios.post<string>("/api/deploy", {
+    const response = await axios.post<FileExecutionT>("/api/deploy", {
       ID: model.value.ID,
       force: force,
     });
     if (response.status < 300 && response.status >= 200) {
       console.log(response);
 
-      stdout.value = response.data.trim().replace(/\n/g, "<br>"); // TODO gestire problema con la risposta (data = '')
+      stdout.value = response.data.stdout.trim().replace(/\n/g, "<br>"); // TODO gestire problema con la risposta (data = '')
       stdoutVisibile.value = true;
       props.onRefresh?.apply(null);
     } else {

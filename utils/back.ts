@@ -5,7 +5,7 @@ import { execFile, type ExecFileOptions } from 'child_process'
 import type { ObjectEncodingOptions } from 'fs'
 import type { EnvironmentT, FileExecutionT } from '../typings';
 
-import {readFileSync} from 'fs'
+import { readFileSync } from 'fs'
 /**
  * 
  * @param path Il percorso da controllare
@@ -83,7 +83,7 @@ export function readJson(): EnvironmentT[] {
         const value = readFileSync(dir, 'utf-8')
         const data = JSON.parse(value);
         return data
-    } catch(e) {
+    } catch (e) {
         console.error("Error reading json file: ", e)
         return []
     }

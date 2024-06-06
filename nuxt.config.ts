@@ -11,12 +11,6 @@ export default defineNuxtConfig({
     './plugins/bootstrap-vue.ts'
   ],
   runtimeConfig: {
-    // //dbconfig: { // Oggetto  per permettere una connessione al database, dati raccolti da .env
-    // //  database: process.env.dbname,
-    // //  host: process.env.dbhost,
-    // //  user: process.env.dbuser,
-    // //  password: process.env.dbpassword
-    // //} as ConnectionOptions
-    JSON_DIR: "C:\\Users\\user\\Desktop\\src\\visualizzazione_branch\\environment.json"
+    JSON_DIR: "./environment.json"
   }
 })

@@ -37,6 +37,11 @@
         "./node_modules/@vue/runtime-dom/dist/runtime-dom"
       ]
     },
+    "types": [
+      "@vue/runtime-core",
+      "@vue/reactivity",
+      "@vue/runtime-dom"
+    ]
   },
   "exclude": [
     "./debug"
