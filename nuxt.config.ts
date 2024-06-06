@@ -11,6 +11,6 @@ export default defineNuxtConfig({
     './plugins/bootstrap-vue.ts'
   ],
   runtimeConfig: {
-    JSON_DIR: "./environment.json"
+    JSON_DIR: process.env.JSON_DIR
   }
 })
