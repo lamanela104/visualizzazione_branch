@@ -30,16 +30,13 @@
       "components/*": [
         "./components/*"
       ],
-      "@vue-rc": [
-        "./node_modules/@vue/runtime-core/dist/runtime-core"
-      ],
-      "@vue-rd": [
-        "./node_modules/@vue/runtime-dom/dist/runtime-dom"
+      "utils": [
+        "./utils/index"
       ]
     },
     "types": [
-      "@vue/runtime-core",
       "@vue/reactivity",
+      "@vue/runtime-core",
       "@vue/runtime-dom"
     ]
   },

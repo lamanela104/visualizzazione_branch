@@ -6,7 +6,9 @@ import type { ObjectEncodingOptions } from 'fs'
 import type { EnvironmentT, FileExecutionT } from '../typings';
 
 import { readFileSync } from 'fs'
-/**
+
+export * from './git'
+/**1
  * 
  * @param path Il percorso da controllare
  * @returns `true` se è valido, altrimenti una `string` con l'errore
