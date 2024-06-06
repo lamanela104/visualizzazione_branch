@@ -24,8 +24,11 @@
         <b-col class="center">
           <ModaleDettagli v-model="row.item" />
         </b-col>
-        <b-col>
-          <ModaleDeploy v-model="row.item" @refresh="props.onRefresh" />
+        <b-col class="center">
+          <ModaleModifica v-model="row.item" :branches="dati.branches" @refresh="emits('refresh')" />
+        </b-col>
+        <b-col class="center">
+          <ModaleDeploy v-model="row.item" @refresh="emits('refresh')" />
         </b-col>
       </b-row>
     </template>
@@ -36,11 +39,9 @@
 import type { FrontendDataT, FieldT } from "typings";
 import type { TableFieldRaw } from "bootstrap-vue/typings";
 
-interface PropT {
-  onRefresh(): Promise<FrontendDataT>;
-}
 const dati = defineModel<FrontendDataT>();
-const props: PropT = defineProps<PropT>();
+const emits = defineEmits(['refresh'])
+
 const campiTabella: TableFieldRaw<FieldT>[] = [
   {
     key: "environment",
@@ -59,4 +60,7 @@ const campiTabella: TableFieldRaw<FieldT>[] = [
     label: "Actions",
   },
 ];
+onMounted(()=>{
+  console.log(dati)
+})
 </script>
