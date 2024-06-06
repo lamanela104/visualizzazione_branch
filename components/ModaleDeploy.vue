@@ -1,6 +1,7 @@
 <template>
   <b-button variant="danger" size="sm" class="mr-1" @click="apriModale()">
     Deploy
+    <b-img src="deploy.svg" fluid-grow class="m1 button-image" />
   </b-button>
   <b-modal
     v-model="modaleAperto"
@@ -23,8 +24,8 @@
           </b-col>
         </b-row>
       </b-form-group>
+      <!-- In caso di errore -->
       <b-form-group>
-        <!-- In caso di errore -->
         <b-alert v-model="erroreVisibile" variant="warning" dismissible fade>
           <b-row>
             <b-col class="center">{{ errore }}</b-col>

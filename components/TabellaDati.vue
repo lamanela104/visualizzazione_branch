@@ -5,30 +5,49 @@
     :fields="campiTabella"
     :items="dati.environments"
     responsive
+    :busy="isBusy"
+    class="data-table"
   >
+    <!-- Scritta dell'environment -->
+    <template #cell(environment)="row">
+      <b-row>
+        <b-col cols="12" md="8">
+          <b-link :href="`${row.item.environmentURL}`">
+            {{ row.item.environment }}
+          </b-link>
+        </b-col>
+        <b-col cols="12" md="4" class="text-md-right">
+          <ModaleDeploy v-model="row.item" @refresh="refresh()" />
+        </b-col>
+      </b-row>
+    </template>
+
     <!-- Scritta della branch -->
     <template #cell(branch)="row">
-      <b-link :href="`${row.item.branchURL}`">
-        {{ row.item.branch }}
-      </b-link>
+      <b-row>
+        <b-col cols="12" md="8">
+          <b-link :href="row.item.branchURL">
+            {{ row.item.branch }}
+          </b-link>
+        </b-col>
+        <b-col cols="12" md="4" class="text-md-right">
+          <ModaleModifica
+            v-model="row.item"
+            :branches="dati.branches"
+            @refresh="refresh()"
+          />
+        </b-col>
+      </b-row>
     </template>
-    <!-- Scritta della branch -->
-    <template #cell(environment)="row">
-      <b-link :href="`${row.item.environmentURL}`">
-        {{ row.item.environment }}
-      </b-link>
-    </template>
+
     <!-- Bottoni che permettono l'interazione con un record -->
-    <template #cell(actions)="row">
-      <b-row align-h="center">
-        <b-col class="center">
+    <template #cell(commit)="row">
+      <b-row>
+        <b-col cols="12" md="8">
+          {{ writeDate(row.value.date) }}
+        </b-col>
+        <b-col cols="12" md="4" class="text-md-right">
           <ModaleDettagli v-model="row.item" />
-        </b-col>
-        <b-col class="center">
-          <ModaleModifica v-model="row.item" :branches="dati.branches" @refresh="emits('refresh')" />
-        </b-col>
-        <b-col class="center">
-          <ModaleDeploy v-model="row.item" @refresh="emits('refresh')" />
         </b-col>
       </b-row>
     </template>
@@ -38,14 +57,19 @@
 <script setup lang="ts">
 import type { FrontendDataT, FieldT } from "typings";
 import type { TableFieldRaw } from "bootstrap-vue/typings";
+interface EmitsT {
+  (e: "refresh"): Promise<FrontendDataT | undefined>;
+}
 
 const dati = defineModel<FrontendDataT>();
-const emits = defineEmits(['refresh'])
+const emits = defineEmits<EmitsT>();
+
+const isBusy = ref(false);
 
 const campiTabella: TableFieldRaw<FieldT>[] = [
   {
     key: "environment",
-    label: "Environment",
+    label: "Ambiente",
     sortable: true,
     sortDirection: "desc",
   },
@@ -56,11 +80,31 @@ const campiTabella: TableFieldRaw<FieldT>[] = [
     sortDirection: "desc",
   },
   {
-    key: "actions",
-    label: "Actions",
+    key: "commit",
+    label: "Commit",
+    sortable: true,
+    sortDirection: "desc",
   },
 ];
-onMounted(()=>{
-  console.log(dati)
-})
+
+async function refresh() {
+  if (isBusy.value) return;
+  isBusy.value = true;
+  let values = await emits("refresh");
+  isBusy.value = false;
+  return values;
+}
+function writeDate(date: string | number | Date): string {
+  date = new Date(date);
+  return Intl.DateTimeFormat("it-IT", {
+    dateStyle: "short",
+    timeStyle: "medium",
+  }).format(date);
+}
 </script>
+
+<style lang="scss" scoped>
+.data-table {
+  overflow-x: hidden;
+}
+</style>
