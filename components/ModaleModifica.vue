@@ -1,10 +1,15 @@
 <template>
   <b-button variant="warning" size="sm" class="mr-1" @click="apriModale()">
-    Modifica
+    <b-img
+      src="modifica.svg"
+      fluid-grow
+      class="m1 button-image"
+    />
   </b-button>
+  
   <b-modal v-model="modaleAperto" hide-footer title="Modifica branch">
     <b-form @submit.prevent="modifica()" @reset="nascondiModale()">
-      <!-- Bottoni per mandare la modifica -->
+      <!-- Branches -->
       <b-form-group>
         <b-form-select v-model="selezionato">
           <b-form-select-option
@@ -16,6 +21,7 @@
           </b-form-select-option>
         </b-form-select>
       </b-form-group>
+      <!-- Buttons -->
       <b-form-group>
         <b-row>
           <b-col class="center">
@@ -29,8 +35,8 @@
           </b-col>
         </b-row>
       </b-form-group>
+      <!-- Error alert -->
       <b-form-group>
-        <!-- In caso di errore -->
         <b-alert v-model="erroreVisibile" variant="warning" dismissible fade>
           <b-row>
             <b-col class="center">
@@ -55,13 +61,14 @@ interface PropT {
 }
 
 const erroreVisibile = ref(false);
-const modaleAperto = ref(false);
-const errore = ref("");
 const chiediConferma = ref(false);
+const modaleAperto = ref(false);
 const selezionato = ref("");
+const errore = ref("");
 
 const props: PropT = defineProps<PropT>();
 const model = defineModel<FieldT>();
+
 onMounted(() => {
   selezionato.value = model.value.branch;
 });

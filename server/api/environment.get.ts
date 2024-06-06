@@ -1,6 +1,5 @@
 import type { EnvironmentT, FieldT, BranchT } from '~/typings'
-import { GitBranch } from '../../utils/git'
-import { readJson } from '~/utils/back'
+import { readJson, GitBranch } from '~/utils'
 
 export default defineEventHandler(async (event) => {
     const data: EnvironmentT[] = readJson();
@@ -33,7 +32,7 @@ export default defineEventHandler(async (event) => {
                     hash: commit.hash,
                     message: commit.message
                 }
-            }
+            } as FieldT
         })
         environments = await Promise.all(promiseOutput);
         setResponseStatus(event, 200, "OK")

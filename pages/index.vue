@@ -1,17 +1,7 @@
 <template>
-  <b-container>
-    <b-row>
-      <!-- La tabella che contiene tutti i dati visualizzati -->
-      <TabellaDati v-model="dati" @refresh="ottieniDati" />
-    </b-row>
-    <b-row align-h="around">
-      <b-col cols="4" class="center" size="lg">
-        <b-button size="lg" variant="primary" @click="ottieniDati">
-          Ricarica
-        </b-button>
-      </b-col>
-    </b-row>
-  </b-container>
+  <Navbar @refresh="ottieniDati" />
+  <!-- La tabella che contiene tutti i dati visualizzati -->
+  <TabellaDati v-model="dati" @refresh="ottieniDati" />
 </template>
       
 <script setup lang="ts">
@@ -19,8 +9,10 @@ import axios from "axios";
 import type { TableFieldRaw } from "bootstrap-vue/typings";
 import type { FrontendDataT } from "typings";
 
-
-const dati = ref<FrontendDataT>({environment: [], branches: []});
+const dati: FrontendDataT = reactive<FrontendDataT>({
+  environment: [],
+  branches: [],
+});
 /**
  * Chiama "GET /api/environment", per ottenere i dati
  * @returns i dati ottenuti dalla richiesta, `dati` è automaticamente aggiornato. Ritorna `undefined` se la richiesta da un qualsiasi errore.
@@ -30,7 +22,9 @@ async function ottieniDati(): Promise<FrontendDataT | undefined> {
   try {
     response = await axios.get<FrontendDataT>("/api/environment");
     if (response.status === 200) {
-      dati.value = response.data;
+      dati.branches = response.data.branches;
+      dati.environments = response.data.environments;
+
       console.log(response.data);
       return response.data;
     }

@@ -1,7 +1,6 @@
 import simpleGit from "simple-git";
 import type { FieldT, FileExecutionT } from "~/typings";
-import { readJson, executeFile } from "~/utils/back";
-import { GitBranch } from "~/utils/git";
+import { readJson, executeFile, GitBranch } from "~/utils";
 
 export default defineEventHandler(async (event) => {
     // Reads the body of the request

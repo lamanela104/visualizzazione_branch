@@ -23,6 +23,13 @@ logs
 .env
 .env.*
 !.env.example
+environment.json
 
 # Debug
 debug/
+
+# Deployers
+deploy.bat
+deploy.sh
+deployer.bat
+deployer.sh

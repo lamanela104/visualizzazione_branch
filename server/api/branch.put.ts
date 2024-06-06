@@ -1,6 +1,5 @@
 import { FieldT } from '~/typings';
-import { readJson } from '~/utils/back';
-import { GitBranch } from '~/utils/git';
+import { readJson, GitBranch } from '~/utils';
 
 export default defineEventHandler(async (event) => {
 
