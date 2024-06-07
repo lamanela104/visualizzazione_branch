@@ -49,13 +49,13 @@
       </b-form-group>
 
       <b-alert
-        v-model="stdoutVisibile"
-        variant="success"
+        v-model="deployerOutputVisible"
+        variant="light"
         dismissible
         fade
         @dismissed="nascondiModale()"
       >
-        <div v-html="stdout"></div>
+        <div v-html="deployerOutput"></div>
       </b-alert>
     </b-form>
   </b-modal>
@@ -63,24 +63,26 @@
 
 <script setup lang="ts">
 import axios from "axios";
-import type { FieldT, FileExecutionT } from "typings";
-
-interface PropT {
-  onRefresh(): void;
+import type { FieldT, FrontendDataT, SpawnedValue } from "typings";
+interface EmitsT {
+  (e: "refresh"): Promise<FrontendDataT | undefined>;
 }
 
-const erroreVisibile = ref(false);
 const modaleAperto = ref(false);
+
+const erroreVisibile = ref(false);
 const errore = ref("");
 const chiediConferma = ref(false);
 
-const stdout = ref("");
-const stdoutVisibile = ref(false);
+const deployerOutput = ref("");
+const deployerOutputVisible = ref(false);
 
-const props: PropT = defineProps<PropT>();
-
+const emits = defineEmits<EmitsT>();
 const model = defineModel<FieldT>();
-
+let modifica = false;
+async function refresh() {
+  await emits("refresh");
+}
 function apriModale() {
   modaleAperto.value = true;
 }
@@ -92,32 +94,60 @@ function reset() {
   errore.value = "";
   chiediConferma.value = false;
 
-  stdout.value = "";
-  stdoutVisibile.value = false;
+  deployerOutput.value = "";
+  deployerOutputVisible.value = false;
+  if (modifica) refresh();
+  modifica = false;
 }
 let sentDeploy = false;
-async function deploy(force?: boolean) {
+async function deploy() {
   if (sentDeploy) return;
   sentDeploy = true;
   try {
-    const response = await axios.post<FileExecutionT>("/api/deploy", {
-      ID: model.value.ID,
-      force: force,
+    const { status, statusText } = await axios.get("/api/checkdeploy", {
+      params: { ID: model.value.ID },
     });
-    if (response.status < 300 && response.status >= 200) {
-      console.log(response);
-
-      stdout.value = response.data.stdout.trim().replace(/\n/g, "<br>"); // TODO gestire problema con la risposta (data = '')
-      stdoutVisibile.value = true;
-      props.onRefresh?.apply(null);
-    } else {
-      mostraErrore(response.statusText, response.status);
+    if (status < 200 || status > 299) {
+      sentDeploy = false;
+      return;
     }
-  } catch (e: any) {
-    mostraErrore(e.response.statusText);
-  } finally {
+  } catch {
     sentDeploy = false;
+    return;
   }
+  
+  const sse = new EventSource(`/api/deploy?ID=${model.value.ID}`);
+  deployerOutput.value = ""
+  deployerOutputVisible.value = true;
+  sse.onopen = (ev) => {
+    console.log("openEvent", ev);
+  };
+  sse.onmessage = (ev: MessageEvent<string>) => {
+    modifica = true;
+    const data: SpawnedValue = JSON.parse(ev.data);
+    console.table(data);
+
+    switch (data.event) {
+      case "error":
+        mostraErrore(data.body.message);
+      case "spawn":
+        break;
+      case "close":
+        sentDeploy = false;
+        return;
+      case "stderr":
+        deployerOutput.value += `<div class="stderr">${data.body}</div>`;
+        break;
+      case "stdout":
+        deployerOutput.value += `<div class="stdout">${data.body}</div>`;
+        break;
+    }
+  };
+  sse.onerror = (ev) => {
+    console.warn(ev);
+    sentDeploy = false;
+    refresh();
+  };
 }
 function mostraErrore(reason: string, code?: number) {
   errore.value = reason;
@@ -128,3 +158,12 @@ function mostraErrore(reason: string, code?: number) {
   console.warn({ ...errore, ...erroreVisibile });
 }
 </script>
+
+<style lang="scss" scoped>
+.stdout {
+  color: #111 !important; 
+}
+.stderr {
+  color: #b00 !important;
+}
+</style>

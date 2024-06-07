@@ -92,10 +92,5 @@ export interface FrontendDataT {
  * DataType for creating an object for the database
  */
 export type AddEnvironmentObjectT = Omit<EnvironmentT, "ID">
-/**
- * The execution of the file output
- */
-export interface FileExecutionT {
-    stdout: string,
-    stderr: string
-}
+
+export * from './execution'
