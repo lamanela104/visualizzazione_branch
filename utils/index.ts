@@ -1,12 +1,11 @@
 import { existsSync } from 'fs'
 import { platform } from 'process'
 import simpleGit from 'simple-git';
-import { execFile, type ExecFileOptions } from 'child_process'
-import type { ObjectEncodingOptions } from 'fs'
-import type { EnvironmentT, FileExecutionT } from '../typings';
+import type { EnvironmentT } from '../typings';
 
 import { readFileSync } from 'fs'
 
+export * from './execution'
 export * from './git'
 /**1
  * 
@@ -65,19 +64,6 @@ export function isValidEnvironment(environment?: string): string | true {
 // //     }
 // // }
 
-export async function executeFile(path: string, args?: string[], options?: (ObjectEncodingOptions & ExecFileOptions)): Promise<FileExecutionT> {
-    return await new Promise<FileExecutionT>((resolve, reject) => {
-        execFile(path, args, options, (error, stdout, stderr) => {
-            if (error) {
-                reject(error);
-            } else
-                resolve({
-                    stdout: stdout.toString('utf-8'),
-                    stderr: stderr.toString('utf-8'),
-                })
-        });
-    })
-}
 
 export function readJson(): EnvironmentT[] {
     try {
@@ -90,3 +76,4 @@ export function readJson(): EnvironmentT[] {
         return []
     }
 }
+
